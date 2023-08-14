@@ -12,6 +12,7 @@
   --color-lighter: #f9f9f9;
   --color-white: #fff;
   --color-border:#e0e3e6;
+  --color-corp: #4596d1
 }
 
 .dark {
@@ -76,15 +77,15 @@ a {
 .app-header {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 20px;
   justify-content: space-between;
-  background-color: var(--color-lighter);
+  background-color: var(--color-corp);
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .app-header h1 {
-  font-size: 30px;
-  color: var(--color-dark);
+  font-size: 16px;
+  color: var(--color-lighter);
   font-weight: 800;
   text-align: center;
 }
@@ -109,15 +110,15 @@ a {
 
 /* NOTES STYLES */
 
-.notes-header {
+.parameters-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
 }
 
-.notes-title,
-.notes-count {
+.parameters-title,
+.parameters-count {
   color: var(--color-main);
   font-size: 24px;
   font-weight: 600;
@@ -129,26 +130,26 @@ a {
 }
 
 
-.notes-list {
+.parameters-list {
   padding: 0;
-  margin: 16px 0;
+  margin: 6px 0;
   height: 70vh;
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
 }
 
-.notes-list::-webkit-scrollbar {
+.parameters-list::-webkit-scrollbar {
   display: none;
 }
 
-.notes-list-item {
+.parameters-list-item {
   border-bottom: 1px solid  var(--color-border);
-  margin-bottom: 12px;
-  padding: 8px 16px;
+  margin-bottom: 1px;
+  padding: 4px 16px;
   transition: all 0.2s ease-in-out;
 }
 
-.notes-list-item:hover {
+.parameters-list-item:hover {
   background-color: var(--color-bg);
   cursor: pointer;
 }
