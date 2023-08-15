@@ -8,7 +8,7 @@ const ParameterPage = () => {
 
   const getParameter = useCallback(async () => {
     if (id === 'new') return;
-    let response = await fetch(`/api/parameters/${id}/`);
+    let response = await fetch(`/backend/parameters/${id}/`);
     let data = await response.json();
     setParameter(data);
   }, [id]);
@@ -20,7 +20,7 @@ const ParameterPage = () => {
   }, [getParameter]);
 
   let createParameter = async () => {
-    fetch(`/api/parameters/`, {
+    fetch(`/backend/parameters/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const ParameterPage = () => {
   };
 
   let updateParameter = async () => {
-    fetch(`/api/parameters/${id}/`, {
+    fetch(`/backend/parameters/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const ParameterPage = () => {
 
   let deleteParameter = async () => {
     if (parameter !== null) {
-      await fetch(`/api/parameters/${id}/`, {
+      await fetch(`/backend/parameters/${id}/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -83,18 +83,28 @@ const ParameterPage = () => {
           <button onClick={handleSubmit}>Done</button>
         )}
       </div>
+      {/* Display and edit Room */}
       <div>
-        <label htmlFor='room'>Room:</label>
+        <label htmlFor='room'>Помещение:</label>
         <input
           type='text'
           id='room'
-          value={parameter?.room || ''}
+          value={parameter?.room.room_number || ''}
           onChange={(e) => handleChange('room', e.target.value)}
         />
       </div>
-      {/* Add more input fields for other parameter properties */}
+      {/* Display and edit other fields */}
+      <div>
+        <label htmlFor='temperature_celsius'>Температура, °C:</label>
+        <input
+          type='number'
+          id='temperature_celsius'
+          value={parameter?.temperature_celsius || ''}
+          onChange={(e) => handleChange('temperature_celsius', e.target.value)}
+        />
+      </div>
+      {/* Add similar input fields for other parameter properties */}
     </div>
   );
-};
-
+}
 export default ParameterPage;
