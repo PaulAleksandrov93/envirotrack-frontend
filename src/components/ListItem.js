@@ -15,7 +15,7 @@ const ListItem = ({ parameter }) => {
           Температура, °C: {parameter.temperature_celsius} | 
           Влажность, %: {parameter.humidity_percentage} | 
           Давление, кПа: {parameter.pressure_kpa} | 
-          Pressure, (mmHg): {parameter.pressure_mmhg} | 
+          Давление, (ммРС): {parameter.pressure_mmhg} | 
           Дата и время: {getTime(parameter.date_time)} 
           
         </p>

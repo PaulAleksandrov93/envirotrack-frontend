@@ -30,7 +30,7 @@ const ParameterPage = () => {
   };
 
   let updateParameter = async () => {
-    fetch(`/backend/parameters/${id}/`, {
+    fetch(`/backend/parameters/update/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const ParameterPage = () => {
 
   let deleteParameter = async () => {
     if (parameter !== null) {
-      await fetch(`/backend/parameters/${id}/`, {
+      await fetch(`/backend/parameters/delete/${id}/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -83,27 +83,62 @@ const ParameterPage = () => {
           <button onClick={handleSubmit}>Done</button>
         )}
       </div>
-      {/* Display and edit Room */}
-      <div>
-        <label htmlFor='room'>Помещение:</label>
-        <input
-          type='text'
-          id='room'
-          value={parameter?.room.room_number || ''}
-          onChange={(e) => handleChange('room', e.target.value)}
-        />
+      <div className='parameter-fields'>
+        <div className='parameter-field'>
+          <label htmlFor='room'>Помещение:</label>
+          <input
+            type='text'
+            id='room'
+            value={parameter?.room.room_number || ''}
+            onChange={(e) => handleChange('room', e.target.value)}
+          />
+        </div>
+        <div className='parameter-field'>
+          <label htmlFor='temperature_celsius'>Температура, °C:</label>
+          <input
+            type='number'
+            id='temperature_celsius'
+            value={parameter?.temperature_celsius || ''}
+            onChange={(e) => handleChange('temperature_celsius', e.target.value)}
+          />
+        </div>
+        <div className='parameter-field'>
+          <label htmlFor='humidity_percentage'>Влажность, %:</label>
+          <input
+            type='number'
+            id='humidity'
+            value={parameter?.humidity_percentage || ''}
+            onChange={(e) => handleChange('humidity_percentage', e.target.value)}
+          />
+        </div>
+        <div className='parameter-field'>
+          <label htmlFor='pressure_kpa'>Давление, кПа:</label>
+          <input
+            type='number'
+            id='pressure_kpa'
+            value={parameter?.pressure_kpa || ''}
+            onChange={(e) => handleChange('pressure_kpa', e.target.value)}
+          />
+        </div>
+        <div className='parameter-field'>
+          <label htmlFor='pressure_mmhg'>Давление, ммРС:</label>
+          <input
+            type='number'
+            id='pressure_mmhg'
+            value={parameter?.pressure_mmhg || ''}
+            onChange={(e) => handleChange('pressure_mmhg', e.target.value)}
+          />
+        </div>
+        <div className='parameter-field'>
+          <label htmlFor='date_time'>Дата и время:</label>
+          <input
+            type='datetime-local'
+            id='date_time'
+            value={parameter?.date_time ? parameter.date_time.slice(0, -1) : ''}
+            onChange={(e) => handleChange('date_time', e.target.value + 'Z')}
+          />
+        </div>
       </div>
-      {/* Display and edit other fields */}
-      <div>
-        <label htmlFor='temperature_celsius'>Температура, °C:</label>
-        <input
-          type='number'
-          id='temperature_celsius'
-          value={parameter?.temperature_celsius || ''}
-          onChange={(e) => handleChange('temperature_celsius', e.target.value)}
-        />
-      </div>
-      {/* Add similar input fields for other parameter properties */}
     </div>
   );
 }
