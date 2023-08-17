@@ -2,9 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg';
 
+import Select from 'react-select';
+
 const ParameterPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
 
   const getParameter = useCallback(async () => {
     if (id === 'new') return;
@@ -15,12 +19,19 @@ const ParameterPage = () => {
 
   let [parameter, setParameter] = useState(null);
 
+  const getRooms = useCallback(async () => {
+    let response = await fetch(`/backend/rooms/`);
+    let data = await response.json();
+    setRooms(data);
+  }, []);
+
   useEffect(() => {
     getParameter();
-  }, [getParameter]);
+    getRooms();
+  }, [getParameter, getRooms]);
 
   let createParameter = async () => {
-    fetch(`/backend/parameters/`, {
+    fetch(`/backend/parameters/create/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,6 +82,8 @@ const ParameterPage = () => {
     console.log('Handle Change:', parameter);
   };
 
+  
+
   return (
     <div className='parameter'>
       <div className='parameter-header'>
@@ -86,11 +99,10 @@ const ParameterPage = () => {
       <div className='parameter-fields'>
         <div className='parameter-field'>
           <label htmlFor='room'>Помещение:</label>
-          <input
-            type='text'
-            id='room'
-            value={parameter?.room.room_number || ''}
-            onChange={(e) => handleChange('room', e.target.value)}
+          <Select
+            options={rooms.map(room => ({ value: room.id, label: room.room_number }))}
+            value={selectedRoom}
+            onChange={(selectedOption) => setSelectedRoom(selectedOption)}
           />
         </div>
         <div className='parameter-field'>
