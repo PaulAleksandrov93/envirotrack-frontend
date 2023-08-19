@@ -15,6 +15,7 @@ const ParameterPage = () => {
     let response = await fetch(`/backend/parameters/${id}/`);
     let data = await response.json();
     setParameter(data);
+    setSelectedRoom(data.room);
   }, [id]);
 
   let [parameter, setParameter] = useState(null);
@@ -36,7 +37,7 @@ const ParameterPage = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(parameter),
+      body: JSON.stringify(parameter)
     });
   };
 
@@ -46,7 +47,8 @@ const ParameterPage = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(parameter),
+      
+      body: JSON.stringify(parameter)
     });
   };
 
@@ -101,8 +103,8 @@ const ParameterPage = () => {
           <label htmlFor='room'>Помещение:</label>
           <Select
             options={rooms.map(room => ({ value: room.id, label: room.room_number }))}
-            value={selectedRoom}
-            onChange={(selectedOption) => setSelectedRoom(selectedOption)}
+            value={selectedRoom ? { value: selectedRoom.id, label: selectedRoom.room_number } : null}
+            onChange={(selectedOption) => setSelectedRoom({ id: selectedOption.value, room_number: selectedOption.label })}
           />
         </div>
         <div className='parameter-field'>
