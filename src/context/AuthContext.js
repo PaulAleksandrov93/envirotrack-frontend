@@ -45,13 +45,13 @@ export const AuthProvider = ({children}) => {
     }
 
     let updateToken = async ()=> {
-        console.log('Update token call')
+        console.log('Update token!')
         let response = await fetch('http://localhost:8000/api/token/refresh/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'refresh': authTokens.refresh})
+            body: JSON.stringify({'refresh': authTokens?.refresh})
         })
         let data = await response.json()
 
@@ -62,15 +62,24 @@ export const AuthProvider = ({children}) => {
         }else{
             logoutUser()
         }
+
+        if(loading){
+            setLoading(false)
+        }
     }
 
     let contextData = {
         user:user,
+        authTokens:authTokens,
         loginUser:loginUser,
         logoutUser:logoutUser,
     }
 
     useEffect(()=> {
+
+        if (loading){
+            updateToken()
+        }
 
         let fourMinutes = 1000 * 60 * 4
         let interval = setInterval(()=> {
@@ -85,7 +94,7 @@ export const AuthProvider = ({children}) => {
 
     return(
         <AuthContext.Provider value={contextData}>
-            {children}
+            {loading ? null : children}
         </AuthContext.Provider>
     )
 }

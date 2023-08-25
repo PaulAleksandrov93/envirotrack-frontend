@@ -6,20 +6,18 @@ const Header = () => {
   let {user, logoutUser} = useContext(AuthContext)
   return (
     <div className='app-header'>
-        <h1>Журнал регистрации параметров окружающей среды</h1>
-        <Link to='/'>Home</Link>
+    <h1>Журнал регистрации параметров окружающей среды</h1>
+    <nav className="nav-links">
+        <Link to='/'>Главная</Link>
         <span> | </span>
         {user ? (
-          <p onClick={logoutUser}>Logout</p>
+            <p className="logout-link" onClick={logoutUser}>Выйти</p>
         ): (
-          <Link to='/login'>Login</Link>
+            <Link to='/login'>Вход</Link>
         )}
-        
-        
-        {user && <p>Hello {user.username}</p>}
-
-        
-    </div>
+    </nav>
+    {user && <p className="user-greeting">Привет, {user.username}</p>}
+</div>
   )
 }
 
