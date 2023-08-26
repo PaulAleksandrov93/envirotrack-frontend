@@ -65,7 +65,7 @@ a {
 
 .app {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   height: 88vh;
   margin: 0 auto;
   background-color: var(--color-white);
@@ -156,7 +156,7 @@ a {
 
 .notes-list-item h3,
 .notes-list-item p span {
-  font-weight: 600;
+  font-weight: 800;
 }
 
 

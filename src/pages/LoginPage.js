@@ -12,7 +12,7 @@ const LoginPage = () => {
         <input type="text" name="username" placeholder="Enter Username" />
         <input type="password" name="password" placeholder="Enter Password" />
         <button type="submit" className="login-button">
-          Login
+          Авторизоваться
         </button>
       </form>
     </div>

@@ -35,8 +35,23 @@
     padding: 10px 20px;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
+
+  /* .login-button {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  } */
   
   .login-button:hover {
-    background-color: #357dbf;
+    background-color: #357dbf; /* Изменение цвета фона при наведении */
+    transform: scale(1.05); /* Увеличение размера при наведении */
   }
+  
+  /* .login-button:hover {
+    background-color: #357dbf;
+  } */

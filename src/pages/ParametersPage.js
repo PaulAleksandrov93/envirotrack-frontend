@@ -93,9 +93,9 @@ const ParameterPage = () => {
           <ArrowLeft onClick={handleSubmit} />
         </h3>
         {id !== 'new' ? (
-          <button onClick={deleteParameter}>Delete</button>
+          <button onClick={deleteParameter}>Удалить</button>
         ) : (
-          <button onClick={handleSubmit}>Done</button>
+          <button onClick={handleSubmit}>Назад</button>
         )}
       </div>
       <div className='parameter-fields'>
