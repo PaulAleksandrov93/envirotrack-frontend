@@ -32,7 +32,7 @@ const ParameterPage = () => {
   }, [getParameter, getRooms]);
 
   let createParameter = async () => {
-    fetch(`/backend/parameters/create/`, {
+    fetch('/backend/parameters/create/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

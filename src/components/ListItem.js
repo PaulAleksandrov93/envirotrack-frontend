@@ -1,5 +1,34 @@
+// import React from 'react';
+// import { Link } from 'react-router-dom';
+
+// const ListItem = ({ parameter }) => {
+//   const getTime = (dateString) => {
+//     const date = new Date(dateString);
+//     return date.toLocaleDateString();
+//   };
+
+//   return (
+//     <Link to={`/parameter/${parameter.id}`}>
+//       <div className="parameters-list-item">
+//       <h3>Помещение: {parameter.room.room_number} | Ответственный: {parameter.responsible.first_name} {parameter.responsible.last_name}</h3>
+//         <p>
+//           Температура, °C: {parameter.temperature_celsius} | 
+//           Влажность, %: {parameter.humidity_percentage} | 
+//           Давление, кПа: {parameter.pressure_kpa} | 
+//           Давление, (ммРС): {parameter.pressure_mmhg} | 
+//           Дата и время: {getTime(parameter.date_time)} 
+//         </p>
+//       </div>
+//     </Link>
+//   );
+// };
+
+// export default ListItem;
+
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './ListItem.css';
 
 const ListItem = ({ parameter }) => {
   const getTime = (dateString) => {
@@ -10,14 +39,24 @@ const ListItem = ({ parameter }) => {
   return (
     <Link to={`/parameter/${parameter.id}`}>
       <div className="parameters-list-item">
-      <h3>Помещение: {parameter.room.room_number} | Ответственный: {parameter.responsible.first_name} {parameter.responsible.last_name}</h3>
-        <p>
-          Температура, °C: {parameter.temperature_celsius} | 
-          Влажность, %: {parameter.humidity_percentage} | 
-          Давление, кПа: {parameter.pressure_kpa} | 
-          Давление, (ммРС): {parameter.pressure_mmhg} | 
-          Дата и время: {getTime(parameter.date_time)} 
-        </p>
+        <h3>Помещение: {parameter.room.room_number} | Ответственный: {parameter.responsible.first_name} {parameter.responsible.last_name}</h3>
+        <div className="parameters">
+          <div className="parameter-item">
+            <span>Температура, °C:</span> {parameter.temperature_celsius}
+          </div>
+          <div className="parameter-item">
+            <span>Влажность, %:</span> {parameter.humidity_percentage}
+          </div>
+          <div className="parameter-item">
+            <span>Давление, кПа:</span> {parameter.pressure_kpa}
+          </div>
+          <div className="parameter-item">
+            <span>Давление, (ммРС):</span> {parameter.pressure_mmhg}
+          </div>
+          <div className="parameter-item">
+            <span>Дата и время:</span> {getTime(parameter.date_time)}
+          </div>
+        </div>
       </div>
     </Link>
   );
