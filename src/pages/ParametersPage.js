@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg';
-
+import AuthContext from '../context/AuthContext';
+// import './ParametersPage.css';
 import Select from 'react-select';
 
 const ParameterPage = () => {
@@ -9,10 +10,44 @@ const ParameterPage = () => {
   const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const { authTokens } = useContext(AuthContext);
+
+  const getCurrentUser = async () => {
+    try {
+      const response = await fetch(
+        '/api/current_user/',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + String(authTokens.access),
+          },
+        }
+      );
+      const data = await response.json();
+      setCurrentUser(data);
+    } catch (error) {
+      console.error('Error fetching current user:', error);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   const getParameter = useCallback(async () => {
     if (id === 'new') return;
-    let response = await fetch(`/backend/parameters/${id}/`);
+    let response = await fetch(
+      `/api/parameters/${id}/`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + String(authTokens.access),
+        },
+      }
+    );
     let data = await response.json();
     setParameter(data);
     setSelectedRoom(data.room);
@@ -21,9 +56,22 @@ const ParameterPage = () => {
   let [parameter, setParameter] = useState(null);
 
   const getRooms = useCallback(async () => {
-    let response = await fetch(`/backend/rooms/`);
-    let data = await response.json();
-    setRooms(data);
+    try {
+      let response = await fetch(`/api/rooms/`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + String(authTokens.access),
+        },
+      }
+    );
+      let data = await response.json();
+      console.log(data); // Добавьте этот console.log для отладки
+      setRooms(data); // Убедитесь, что data содержит массив комнат
+    } catch (error) {
+      console.error('Error fetching rooms:', error);
+    }
   }, []);
 
   useEffect(() => {
@@ -32,32 +80,49 @@ const ParameterPage = () => {
   }, [getParameter, getRooms]);
 
   let createParameter = async () => {
-    fetch('/backend/parameters/create/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(parameter)
-    });
+    if (currentUser) {
+      const newParameter = { ...parameter, responsible: currentUser.id };
+      try {
+        const response = await fetch('/api/parameters/create/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + String(authTokens.access),
+          },
+          body: JSON.stringify(newParameter),
+        });
+  
+        if (response.ok) {
+          // Переход на другую страницу, если запрос выполнен успешно
+          navigate('/');
+        } else {
+          // Обработка ошибок, если не удалось создать параметр
+          console.error('Failed to create parameter:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error while creating parameter:', error);
+      }
+    }
   };
 
   let updateParameter = async () => {
-    fetch(`/backend/parameters/update/${id}/`, {
+    fetch(`/api/parameters/update/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + String(authTokens.access),
       },
-      
-      body: JSON.stringify(parameter)
+      body: JSON.stringify(parameter),
     });
   };
 
   let deleteParameter = async () => {
     if (parameter !== null) {
-      await fetch(`/backend/parameters/delete/${id}/`, {
+      await fetch(`/api/parameters/delete/${id}/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + String(authTokens.access),
         },
         body: JSON.stringify(parameter),
       });
@@ -84,8 +149,6 @@ const ParameterPage = () => {
     console.log('Handle Change:', parameter);
   };
 
-  
-
   return (
     <div className='parameter'>
       <div className='parameter-header'>
@@ -95,16 +158,21 @@ const ParameterPage = () => {
         {id !== 'new' ? (
           <button onClick={deleteParameter}>Удалить</button>
         ) : (
-          <button onClick={handleSubmit}>Назад</button>
+          <>
+            <button onClick={handleSubmit}>Назад</button>
+            <button onClick={createParameter}>Создать</button> {/* Добавленная кнопка */}
+          </>
         )}
       </div>
       <div className='parameter-fields'>
         <div className='parameter-field'>
           <label htmlFor='room'>Помещение:</label>
           <Select
-            options={rooms.map(room => ({ value: room.id, label: room.room_number }))}
+            options={rooms.map((room) => ({ value: room.id, label: room.room_number }))}
             value={selectedRoom ? { value: selectedRoom.id, label: selectedRoom.room_number } : null}
-            onChange={(selectedOption) => setSelectedRoom({ id: selectedOption.value, room_number: selectedOption.label })}
+            onChange={(selectedOption) =>
+              setSelectedRoom({ id: selectedOption.value, room_number: selectedOption.label })
+            }
           />
         </div>
         <div className='parameter-field'>
@@ -152,8 +220,15 @@ const ParameterPage = () => {
             onChange={(e) => handleChange('date_time', e.target.value + 'Z')}
           />
         </div>
+        {id === 'new' && currentUser && (
+          <div className='parameter-field'>
+            <label>Создано пользователем:</label>
+            <div>{currentUser.first_name} {currentUser.last_name} </div>
+          </div>
+        )}
       </div>
     </div>
   );
-}
+};
+
 export default ParameterPage;

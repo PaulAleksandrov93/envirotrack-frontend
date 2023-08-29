@@ -1,0 +1,97 @@
+.parameter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .parameter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .parameter-header h3 {
+    margin: 0;
+  }
+  
+  .parameter-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .parameter-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .parameter-field label {
+    margin-bottom: 5px;
+  }
+  
+  .parameter-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .parameter-popup {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 400px;
+  }
+  
+  .parameter-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .parameter-popup-header h3 {
+    margin: 0;
+  }
+  
+  .parameter-popup-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .parameter-popup-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .parameter-popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .parameter-popup-buttons button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .parameter-popup-buttons button:first-child {
+    margin-right: 10px;
+  }
