@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg';
 import AuthContext from '../context/AuthContext';
-// import './ParametersPage.css';
 import Select from 'react-select';
 
 const ParameterPage = () => {
@@ -67,8 +66,7 @@ const ParameterPage = () => {
       }
     );
       let data = await response.json();
-      console.log(data); // Добавьте этот console.log для отладки
-      setRooms(data); // Убедитесь, что data содержит массив комнат
+      setRooms(data);
     } catch (error) {
       console.error('Error fetching rooms:', error);
     }
@@ -79,9 +77,54 @@ const ParameterPage = () => {
     getRooms();
   }, [getParameter, getRooms]);
 
+  // let createParameter = async () => {
+  //   if (currentUser) {
+  //     const newParameter = {
+  //       room: { room_number: selectedRoom.room_number }, // Pass room_number as a dictionary
+  //       temperature_celsius: parameter.temperature_celsius,
+  //       humidity_percentage: parameter.humidity_percentage,
+  //       pressure_kpa: parameter.pressure_kpa,
+  //       pressure_mmhg: parameter.pressure_mmhg,
+  //       date_time: parameter.date_time,
+  //       responsible: { id: currentUser.id } // Pass responsible as a dictionary with ID
+  //     };
+  //     try {
+  //       const response = await fetch('/api/parameters/create/', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: 'Bearer ' + String(authTokens.access),
+  //         },
+  //         body: JSON.stringify(newParameter),
+  //       });
+  
+  //       if (response.ok) {
+  //         navigate('/');
+  //       } else {
+  //         console.error('Failed to create parameter:', response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error while creating parameter:', error);
+  //     }
+  //   }
+  // };
+
   let createParameter = async () => {
     if (currentUser) {
-      const newParameter = { ...parameter, responsible: currentUser.id };
+      const newParameter = {
+        room: { room_number: selectedRoom.room_number }, // Pass room_number as a dictionary
+        temperature_celsius: parameter.temperature_celsius,
+        humidity_percentage: parameter.humidity_percentage,
+        pressure_kpa: parameter.pressure_kpa,
+        pressure_mmhg: parameter.pressure_mmhg,
+        date_time: parameter.date_time,
+        responsible: {
+          id: currentUser.id,
+          first_name: currentUser.first_name,
+          last_name: currentUser.last_name,
+          patronymic: currentUser.patronymic
+        }
+      };
       try {
         const response = await fetch('/api/parameters/create/', {
           method: 'POST',
@@ -93,10 +136,8 @@ const ParameterPage = () => {
         });
   
         if (response.ok) {
-          // Переход на другую страницу, если запрос выполнен успешно
           navigate('/');
         } else {
-          // Обработка ошибок, если не удалось создать параметр
           console.error('Failed to create parameter:', response.statusText);
         }
       } catch (error) {
@@ -106,39 +147,54 @@ const ParameterPage = () => {
   };
 
   let updateParameter = async () => {
-    fetch(`/api/parameters/update/${id}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + String(authTokens.access),
-      },
-      body: JSON.stringify(parameter),
-    });
-  };
-
-  let deleteParameter = async () => {
-    if (parameter !== null) {
-      await fetch(`/api/parameters/delete/${id}/`, {
-        method: 'DELETE',
+    try {
+      const response = await fetch(`/api/parameters/update/${id}/`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + String(authTokens.access),
         },
         body: JSON.stringify(parameter),
       });
+  
+      if (!response.ok) {
+        console.error('Failed to update parameter:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error while updating parameter:', error);
     }
-    navigate('/');
+  };
+
+  let deleteParameter = async () => {
+    if (parameter !== null) {
+      try {
+        const response = await fetch(`/api/parameters/delete/${id}/`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + String(authTokens.access),
+          },
+          body: JSON.stringify(parameter),
+        });
+  
+        if (!response.ok) {
+          console.error('Failed to delete parameter:', response.statusText);
+        } else {
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('Error while deleting parameter:', error);
+      }
+    }
   };
 
   let handleSubmit = async () => {
-    console.log('PARAMETER:', parameter);
-
     if (id !== 'new' && parameter.room === '') {
-      await deleteParameter(); // Await the deletion process
+      await deleteParameter();
     } else if (id !== 'new') {
-      await updateParameter(); // Await the update process
+      await updateParameter();
     } else if (id === 'new' && parameter !== null) {
-      await createParameter(); // Await the creation process
+      await createParameter();
     }
 
     navigate('/');
@@ -146,7 +202,6 @@ const ParameterPage = () => {
 
   let handleChange = (field, value) => {
     setParameter((prevParameter) => ({ ...prevParameter, [field]: value }));
-    console.log('Handle Change:', parameter);
   };
 
   return (
@@ -160,7 +215,6 @@ const ParameterPage = () => {
         ) : (
           <>
             <button onClick={handleSubmit}>Назад</button>
-            <button onClick={createParameter}>Создать</button> {/* Добавленная кнопка */}
           </>
         )}
       </div>
