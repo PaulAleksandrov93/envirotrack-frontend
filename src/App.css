@@ -65,8 +65,8 @@ a {
 
 .app {
   width: 100%;
-  max-width: 1000px;
-  height: 80vh;
+  max-width: 90%;
+  height: 90%;
   margin: 0 auto;
   background-color: var(--color-white);
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.05);

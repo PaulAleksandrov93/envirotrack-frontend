@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './FilterParameters.css';
 
-
 const FilterParameters = ({ filterData, setFilterData }) => {
-  // State для выбора ответственного, помещения и даты
   const [selectedResponsible, setSelectedResponsible] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
 
-  // Здесь вы должны загрузить список ответственных и помещений через API
-  // и использовать useState для их хранения
   const [responsibles, setResponsibles] = useState([]);
   const [rooms, setRooms] = useState([]);
 
-  // Загрузка данных для ответственных и помещений при монтировании компонента
   useEffect(() => {
-    // Здесь загрузите список ответственных и помещений через API
-    // и установите их в состояние
+    // Load responsibles and rooms from API and set them in the state
+    // ...
+
   }, []);
 
-  // Обработчик события изменения фильтров
   const handleFilterChange = () => {
     const filters = {
       responsible: selectedResponsible,
@@ -27,6 +22,13 @@ const FilterParameters = ({ filterData, setFilterData }) => {
       date: selectedDate,
     };
     setFilterData(filters);
+  };
+
+  const handleResetFilters = () => {
+    setSelectedResponsible('');
+    setSelectedRoom('');
+    setSelectedDate('');
+    setFilterData({});
   };
 
   return (
@@ -61,7 +63,13 @@ const FilterParameters = ({ filterData, setFilterData }) => {
         onChange={(e) => setSelectedDate(e.target.value)}
       />
 
-      <button onClick={handleFilterChange}>Применить фильтры</button>
+      <button className="apply-button" onClick={handleFilterChange}>
+        Применить фильтры
+      </button>
+
+      <button className="reset-button" onClick={handleResetFilters}>
+        Сбросить фильтры
+      </button>
     </div>
   );
 };

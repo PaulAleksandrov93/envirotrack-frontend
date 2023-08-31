@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg';
 import AuthContext from '../context/AuthContext';
 import Select from 'react-select';
+import './ParametersPage.css';
 
 const ParameterPage = () => {
   const { id } = useParams();
@@ -76,38 +77,6 @@ const ParameterPage = () => {
     getParameter();
     getRooms();
   }, [getParameter, getRooms]);
-
-  // let createParameter = async () => {
-  //   if (currentUser) {
-  //     const newParameter = {
-  //       room: { room_number: selectedRoom.room_number }, // Pass room_number as a dictionary
-  //       temperature_celsius: parameter.temperature_celsius,
-  //       humidity_percentage: parameter.humidity_percentage,
-  //       pressure_kpa: parameter.pressure_kpa,
-  //       pressure_mmhg: parameter.pressure_mmhg,
-  //       date_time: parameter.date_time,
-  //       responsible: { id: currentUser.id } // Pass responsible as a dictionary with ID
-  //     };
-  //     try {
-  //       const response = await fetch('/api/parameters/create/', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: 'Bearer ' + String(authTokens.access),
-  //         },
-  //         body: JSON.stringify(newParameter),
-  //       });
-  
-  //       if (response.ok) {
-  //         navigate('/');
-  //       } else {
-  //         console.error('Failed to create parameter:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error while creating parameter:', error);
-  //     }
-  //   }
-  // };
 
   let createParameter = async () => {
     if (currentUser) {
