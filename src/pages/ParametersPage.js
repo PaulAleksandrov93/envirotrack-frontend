@@ -96,57 +96,11 @@ const ParameterPage = () => {
     getMeasurementInstruments();
   }, [getParameter, getRooms, getMeasurementInstruments]);
 
-  // let createParameter = async () => {
-  //   if (currentUser) {
-  //     const newParameter = {
-  //       room: { room_number: selectedRoom.room_number },
-  //       measurement_instrument: { 
-  //         id: parameter.measurement_instrument.id,
-  //         name: parameter.measurement_instrument.name, 
-  //         type: parameter.measurement_instrument.type,
-  //         serial_number: parameter.measurement_instrument.serial_number,
-  //         calibration_date: parameter.measurement_instrument.calibration_date,
-  //         calibration_interval: parameter.measurement_instrument.calibration_interval,    
-  //       },
-  //       temperature_celsius: parameter.temperature_celsius,
-  //       humidity_percentage: parameter.humidity_percentage,
-  //       pressure_kpa: parameter.pressure_kpa,
-  //       pressure_mmhg: parameter.pressure_mmhg,
-  //       date_time: parameter.date_time,
-  //       responsible: {
-  //         id: currentUser.id,
-  //         first_name: currentUser.first_name,
-  //         last_name: currentUser.last_name,
-  //         patronymic: currentUser.patronymic
-  //       }
-  //     };
-  //     try {
-  //       const response = await fetch('/api/parameters/create/', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: 'Bearer ' + String(authTokens.access),
-  //         },
-  //         body: JSON.stringify(newParameter),
-  //       });
-  
-  //       if (response.ok) {
-  //         navigate('/');
-  //       } else {
-  //         console.error('Failed to create parameter:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error while creating parameter:', error);
-  //     }
-  //   }
-  // };
-
-  let createParameter = async () => {
+    let createParameter = async () => {
     if (currentUser) {
       const newParameter = {
         room: { room_number: selectedRoom.room_number },
-        measurement_instrument: {
-          id: parameter.measurement_instrument.id,
+        measurement_instrument: { // Обновляем поле measurement_instrument
           name: parameter.measurement_instrument.name,
           type: parameter.measurement_instrument.type,
           serial_number: parameter.measurement_instrument.serial_number,
