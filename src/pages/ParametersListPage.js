@@ -3,7 +3,7 @@ import ListItem from '../components/ListItem';
 import AddButton from '../components/AddButton';
 import AuthContext from '../context/AuthContext';
 import FilterParameters from '../components/FilterParameters';
-import './ParametersListPage.css'; // Импортируем файл стилей
+import './ParametersListPage.css'; 
 
 const ParametersListPage = () => {
   const [parameters, setParameters] = useState([]);

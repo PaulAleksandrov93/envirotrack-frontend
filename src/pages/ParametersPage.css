@@ -24,6 +24,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 30px; /* Увеличенный отступ между полями */
   width: 100%;
+  justify-content: center; /* Добавлено выравнивание по центру */
 }
 
 .parameter-field {
@@ -37,6 +38,20 @@
   font-size: 18px; /* Увеличенный размер шрифта */
 }
 
+/* Увеличенные размеры формы */
+.parameter-field input {
+  padding: 12px; /* Увеличенный внутренний отступ */
+  font-size: 18px; /* Увеличенный размер шрифта */
+  border: 1px solid #ccc; /* Граничная линия снизу */
+  border-radius: 4px; /* Увеличенный радиус закругления */
+}
+.custom-select {
+  padding: 8px !important; /* Уменьшенный внутренний отступ */
+  font-size: 16px !important; /* Уменьшенный размер шрифта */
+  border: 1px solid #ccc !important; /* Граничная линия снизу */
+  border-radius: 2px !important; /* Уменьшенный радиус закругления */
+  width: 100% !important; /* Растянуть поле на всю доступную ширину */
+}
 .parameter-popup-overlay {
   position: fixed;
   top: 0;
@@ -98,4 +113,86 @@
 
 .parameter-popup-buttons button:first-child {
   margin-right: 20px; /* Увеличенный отступ между кнопками */
+}
+/* Стили для поля "Создано пользователем" */
+.created-by-field {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 20px; /* Отступ сверху */
+}
+
+.created-by-label {
+  font-size: 18px; /* Увеличенный размер шрифта для метки */
+}
+
+.created-by-name {
+  font-size: 18px; /* Увеличенный размер шрифта для имени пользователя */
+  margin-top: 16px;
+}
+
+/* Добавьте следующие стили в ваш файл ParameterPage.css */
+.parameter-button-create,
+.parameter-button-save,
+.parameter-button-delete,
+.parameter-button-back {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 10px; /* Отступ между кнопками */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.parameter-button-save,
+.parameter-button-delete {
+  background-color: #dc3545; /* Красный цвет для кнопок "Сохранить" и "Удалить" */
+}
+
+.parameter-button-save:hover,
+.parameter-button-delete:hover {
+  background-color: #c82333; /* Измененный цвет при наведении для "Сохранить" и "Удалить" */
+}
+
+.parameter-button-save:hover,
+.parameter-button-delete:hover,
+.parameter-button-back:hover {
+  background-color: #0056b3; /* Измененный цвет при наведении */
+}
+
+.modified-by-field {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 20px;
+}
+
+.modified-by-label {
+  font-size: 18px;
+}
+
+.modified-by-name {
+  font-size: 18px;
+  margin-top: 16px;
+}
+
+.parameter-button-back:hover {
+  background-color: #0056b3; /* Измененный цвет при наведении для "Назад" */
+}
+
+.parameter-button-back {
+  background-color: #6c757d; /* Серый цвет для кнопки "Назад" */
+}
+
+.parameter-button-back:hover {
+  background-color: #545b62; /* Измененный цвет при наведении для "Назад" */
+  transform: scale(1.05); /* Увеличение кнопки при наведении */
+}
+
+.parameter-button-create:hover {
+  background-color: #0056b3; /* Измененный цвет при наведении */
+  transform: scale(1.05); /* Увеличение кнопки при наведении */
 }
