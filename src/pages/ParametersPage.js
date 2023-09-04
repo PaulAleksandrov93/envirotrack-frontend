@@ -12,6 +12,8 @@ const ParameterPage = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [measurementInstruments, setMeasurementInstruments] = useState([]);
   const { authTokens } = useContext(AuthContext);
+  const [createdBy, setCreatedBy] = useState(null);
+  const [modifiedBy, setModifiedBy] = useState(null);
   
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -35,6 +37,23 @@ const ParameterPage = () => {
     getCurrentUser();
   }, [authTokens.access]);
 
+  // const getParameter = useCallback(async () => {
+  //   if (id === 'new') return;
+  //   let response = await fetch(
+  //     `/api/parameters/${id}/`,
+  //     {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: 'Bearer ' + String(authTokens.access),
+  //       },
+  //     }
+  //   );
+  //   let data = await response.json();
+  //   setParameter(data);
+  //   setSelectedRoom(data.room);
+  // }, [authTokens.access, id]);
+
   const getParameter = useCallback(async () => {
     if (id === 'new') return;
     let response = await fetch(
@@ -50,6 +69,8 @@ const ParameterPage = () => {
     let data = await response.json();
     setParameter(data);
     setSelectedRoom(data.room);
+    setCreatedBy(data.created_by);
+    setModifiedBy(data.modified_by);
   }, [authTokens.access, id]);
 
   let [parameter, setParameter] = useState(null);
@@ -301,12 +322,16 @@ const ParameterPage = () => {
               onChange={(e) => handleChange('date_time', e.target.value + 'Z')}
             />
           </div>
-          {currentUser && (
-          <div className='parameter-field'>
-            <label>Создано пользователем:</label>
-            <div>{currentUser.first_name} {currentUser.last_name} </div>
+          <div className='parameter-fields-1'>
+            <div className='parameter-field'>
+              <label>Создано:</label>
+              <div className="created-by">{createdBy ? `${createdBy}` : 'Нет данных'}</div>
+            </div>
+            <div className='parameter-field'>
+              <label>Изменено:</label>
+              <div className="modified-by">{modifiedBy ? `${modifiedBy}` : 'Нет данных'}</div>
+            </div>
           </div>
-          )}
         </div>
       </div>
     </div>

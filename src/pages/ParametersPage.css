@@ -196,3 +196,36 @@
   background-color: #0056b3; /* Измененный цвет при наведении */
   transform: scale(1.05); /* Увеличение кнопки при наведении */
 }
+
+/* Увеличить размер шрифта для createdBy и modifiedBy */
+.created-by, .modified-by {
+  font-size: 18px; 
+}
+
+.parameter-fields-1 {
+  display: flex;
+  flex-direction: row; /* Установите горизонтальное направление */
+  align-items: center; /* Выравнивание по вертикали */
+  gap: 8px; /* Установите желаемое горизонтальное расстояние между элементами */
+  margin-top: 20px; /* Отступ сверху */
+}
+
+/* Измените стили для полей "Создано" и "Изменено" */
+.parameter-field-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 0; /* Уберите верхний отступ */
+  font-size: 18px; /* Увеличьте размер шрифта */
+}
+
+/* Добавьте стили для меток "Создано" и "Изменено" */
+.created-by-label, .modified-by-label {
+  font-size: 18px; /* Увеличьте размер шрифта для меток */
+}
+
+/* Уменьшите верхний отступ для имени пользователя */
+.created-by-name, .modified-by-name {
+  font-size: 18px; /* Увеличьте размер шрифта для имени пользователя */
+  margin-top: 8px; /* Уменьшите верхний отступ */
+}
